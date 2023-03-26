@@ -50,13 +50,4 @@ public class DocumentServiceImpl implements DocumentService {
     public void deleteDocument(Long id) {
         documentRepository.deleteById(id);
     }
-
-
-    private Document mapDocument(String type){
-        Document document = new Document();
-        document.setType(type);
-        document.setStatus("Не начато");
-        document.setUpdatedAt(LocalDateTime.now());
-        return document;
-    }
 }
