@@ -6,6 +6,9 @@ import com.document.workflow.dto.DocumentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/api/documents")
 public class DocumentController {
@@ -19,20 +22,29 @@ public class DocumentController {
     }
 
     @PostMapping
-    public Document createDocument(@RequestBody DocumentDto documentDto){
-        return documentService.createDocument(documentDto.getType());
+    public Document createDocument(@RequestBody Document document){
+        return documentService.createDocument(document);
     }
 
-    @PutMapping("update/{id}")
-    public Document updateDocument(@RequestBody Document documentDto){
-        return documentService.updateDocument(documentDto.getId(), documentDto.getType(), documentDto.getStatus());
+    @PutMapping("/{id}")
+    public Document updateDocument(@RequestBody Document document, @PathVariable("id") Long id){
+        return documentService.updateDocument(document, id);
     }
 
-//    @GetMapping(value = "/{id}")
-//    public ResponseEntity<Document> getById(Long documentId){
-//        return
-//    }
-//
+    @GetMapping(value = "/{id}")
+    public Document getDocument(@PathVariable("id") Long id){
+        return documentService.getDocument(id);
+    }
 
+    @GetMapping
+    public List<Document> listAllDocuments(){
+        List<Document> documents = documentService.getDocuments();
+        return documents;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteDocument(@PathVariable("id") Long id){
+        documentService.deleteDocument(id);
+    }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -15,31 +16,39 @@ public class DocumentServiceImpl implements DocumentService {
     private DocumentRepository documentRepository;
 
     public DocumentServiceImpl(DocumentRepository documentRepository) {
-        //super();
         this.documentRepository = documentRepository;
     }
 
     @Override
-    public Document createDocument(String type) {
-        Document document = mapDocument(type);
+    public Document createDocument(Document document) {
+        document.setStatus("Создано");
         document.setCreatedAt(LocalDateTime.now());
-        System.out.println(document);
-        return documentRepository.save(document);
-    }
-
-    @Override
-    public Document saveDocument(Document document) {
-        return documentRepository.save(document);
-    }
-
-    @Override
-    public Document updateDocument(Long id, String type, String status) {
-        Document document = mapDocument(type);
-        document.setId(id);
-        document.setStatus(status);
         document.setUpdatedAt(LocalDateTime.now());
-//        document.setEmp_id(emp_id);
         return documentRepository.save(document);
+    }
+
+    @Override
+    public Document updateDocument(Document document, Long id) {
+        Document oldDocument = documentRepository.getReferenceById(id);
+        oldDocument.setStatus(document.getStatus());
+        oldDocument.setType(document.getType());
+        oldDocument.setUpdatedAt(LocalDateTime.now());
+        return documentRepository.save(oldDocument);
+    }
+
+    @Override
+    public Document getDocument(Long id) {
+        return documentRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Document> getDocuments() {
+        return documentRepository.findAll();
+    }
+
+    @Override
+    public void deleteDocument(Long id) {
+        documentRepository.deleteById(id);
     }
 
 
