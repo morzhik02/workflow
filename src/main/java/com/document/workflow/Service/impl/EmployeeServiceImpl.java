@@ -30,13 +30,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee updateEmployee(Employee student, Long id) {
         Employee oldEmployee = employeeRepository.getReferenceById(id);
         oldEmployee.setUpdatedAt(LocalDateTime.now());
-        oldEmployee.setGroup(student.getGroup());
+        oldEmployee.setGroup_name(student.getGroup_name());
         return employeeRepository.save(oldEmployee);
     }
 
     @Override
     public Employee getEmployee(Long id) {
-        return employeeRepository.getReferenceById(id);
+        return employeeRepository.findById(id).get();
     }
 
     @Override

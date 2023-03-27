@@ -1,6 +1,5 @@
 package com.document.workflow.Service.impl;
 
-import com.document.workflow.Entity.Document;
 import com.document.workflow.Entity.Student;
 import com.document.workflow.Repository.StudentRepository;
 import com.document.workflow.Service.StudentService;
@@ -31,13 +30,13 @@ public class StudentServiceImpl implements StudentService {
     public Student updateStudent(Student student, Long id) {
         Student oldStudent = studentRepository.getReferenceById(id);
         oldStudent.setUpdatedAt(LocalDateTime.now());
-        oldStudent.setGroup(student.getGroup());
+        oldStudent.setGroup_name(student.getGroup_name());
         return studentRepository.save(oldStudent);
     }
 
     @Override
     public Student getStudent(Long id) {
-        return studentRepository.getReferenceById(id);
+        return studentRepository.findById(id).get();
     }
 
     @Override

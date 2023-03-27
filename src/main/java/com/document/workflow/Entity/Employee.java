@@ -22,11 +22,14 @@ public class Employee {
     @Column(name = "mid_name")
     private String mid_name;
 
-    @Column(name = "group")
-    private String group;
+    @Column(name = "group_name")
+    private String group_name;
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "login_name")
+    private String login_name;
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
